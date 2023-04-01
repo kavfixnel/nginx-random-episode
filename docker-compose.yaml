@@ -8,6 +8,7 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./configs:/etc/nginx/configs:ro
     healthcheck:
       test: ['CMD', 'curl --fail http://localhost/ || exit 1']
       interval: 30s
