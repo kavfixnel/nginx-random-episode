@@ -94,3 +94,30 @@ Aterwards, we can spin up with TLS version of this application with
 ```bash
 $ docker compose up -f docker-compose.tls.yaml
 ```
+
+## Deploying to a hosted instance
+
+Included in this repo are the neccesary Terraform and Ansible configurations to deploy this application to
+an environment in AWS. In order to spin up an environment, execute the following in the `terraform` subdirectory
+
+```bash
+terraform init
+terraform apply
+```
+
+The apply command will spit out a variable named `public_dns`. Take the variable and put
+it in a file named `hosts` in the ansible subdirectory:
+
+```
+[aws]
+<public_dns variable>
+```
+
+followed by the following commands in said subdirectory
+
+```bash
+ansible-playbook -i hosts setup_machines.yaml
+ansible-playbook -i hosts deploy.yaml
+```
+
+The app should now be running and reachable under the dns name from earlier
