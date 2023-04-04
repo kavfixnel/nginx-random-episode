@@ -1,6 +1,3 @@
-*.crt
-*.key
-
 # Local .terraform directories
 **/.terraform/*
 
