@@ -7,8 +7,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./configs:/etc/nginx/configs:ro
+      - ./configs:/etc/nginx:ro
+      - ./episodes:/var/episodes:ro
       - ./static:/usr/share/nginx/html/:ro
     healthcheck:
       test: ['CMD', 'curl --fail http://localhost/ || exit 1']

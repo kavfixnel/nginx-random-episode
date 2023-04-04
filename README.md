@@ -37,6 +37,14 @@ $ curl http://localhost:80/netflix/seinfeld -v
 * Connection #0 to host localhost left intact
 ```
 
+## Project structure
+
+- [configs/](configs/) contains the configuration that act as the brain for all the logic.
+- [episodes/<service>/<show>](episodes/) are the files containing links to episodes of the a show.
+Files must contain 1 full `http(s)://...` links per line and have no trailing line at
+the end of the file.
+- [ansible/](ansible/) and [terraform/](terraform/) are folders that contain deployment configuration.
+
 ## How to run locally
 
 The docker compose configuration makes setup trivial
@@ -78,21 +86,6 @@ nginx-random-redirect-nginx-lua-1  | 2023/04/01 06:27:17 [notice] 1#1: start wor
 nginx-random-redirect-nginx-lua-1  | 2023/04/01 06:27:17 [notice] 1#1: start worker process 28
 nginx-random-redirect-nginx-lua-1  | 2023/04/01 06:27:17 [notice] 1#1: start worker process 29
 nginx-random-redirect-nginx-lua-1  | 2023/04/01 06:27:17 [notice] 1#1: start worker process 30
-```
-
-## How to run locally with TLS
-
-To test TLS with this setup, we need to create our own self-signed certificate for testing. We can do this by
-following [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-18-04), or just running the following:
-
-```bash
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx-selfsigned.key -out nginx-selfsigned.crt
-```
-
-Aterwards, we can spin up with TLS version of this application with
-
-```bash
-$ docker compose up -f docker-compose.tls.yaml
 ```
 
 ## Deploying to a hosted instance
