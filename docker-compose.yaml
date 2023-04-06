@@ -2,10 +2,10 @@ version: '3.7'
 
 services:
   nginx-lua:
-    image: fabiocicerchia/nginx-lua:1.23-alpine
+    image: fabiocicerchia/nginx-lua:${NGINX_LUA_TAG}
     restart: always
     ports:
-      - "80:80"
+      - "${PORT}:80"
     volumes:
       - ./configs:/etc/nginx:ro
       - ./episodes:/var/episodes:ro
