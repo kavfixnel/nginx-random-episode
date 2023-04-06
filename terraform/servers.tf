@@ -15,8 +15,8 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_key_pair" "dev" {
-  key_name   = "dev-key"
-  public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMYxDwgna/0mFFaQCfTPXyfiItQWANftAu+jUPbw1s1A"
+  key_name   = "deploy-key"
+  public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEWQG6aQ1ep2lhGhiRtY/E0QAw804Ejiu9WjfkMp3m/C"
 
   tags = {
     App = "nginx-random-redirect"

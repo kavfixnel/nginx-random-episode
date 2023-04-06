@@ -1,0 +1,26 @@
+name: Deploy to prod with Ansible
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: List files in the repository
+        run: |
+          find ${{ github.workspace }}
+      - name: ansible deploy
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: deploy.yaml
+          directory: ansible
+          known_hosts: |
+            ec2-35-93-154-158.us-west-2.compute.amazonaws.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO5tjEbiZQ3gBtjJawEoqTn7TVwZzmekJdH7hSqq/UA9
+            ec2-35-93-154-158.us-west-2.compute.amazonaws.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDLXKCBgC7mthEmeP8oRt6UR+CR9I641VG7R9bR/i5Tpeuw2yh5FJ0xa1ER5DYIPR1A7xvXWET1wLgkzsTK+32w=
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          inventory: |
+            [aws]
+            ec2-35-93-154-158.us-west-2.compute.amazonaws.com
