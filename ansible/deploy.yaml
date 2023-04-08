@@ -10,6 +10,13 @@
         clone: yes
         update: yes
 
+    # Shut down server in case it's already running
+    - name: Stop nginx-random-redirect
+      ansible.builtin.shell:
+        cmd: docker compose down
+        chdir: /home/ubuntu/nginx-random-episode
+      ignore_errors: true
+
     - name: Start nginx-random-redirect
       ansible.builtin.shell:
         cmd: docker compose up -d
