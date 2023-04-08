@@ -10,7 +10,7 @@ The scripts have a list of all espisodes of a given show, will randomly pick one
 Nginx to respond with a 302 redirect to that episode.
 
 ```bash
-$ curl http://localhost:80/netflix/seinfeld -v
+$ curl http://localhost:80/random/netflix/seinfeld -v
 *   Trying 127.0.0.1:80...
 * Connected to localhost (127.0.0.1) port 80 (#0)
 > GET /netflix/seinfeld HTTP/1.1
