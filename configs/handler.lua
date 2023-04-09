@@ -1,6 +1,6 @@
 math.randomseed(ngx.now()*1000)
 
-local file = "/var/episodes/" .. ngx.var.service_series
+local file = "/var/episodes/" .. ngx.var.service_series .. "/all.episodes"
 
 -- Read in the episode file and pick an episode at random
 local e = {}
