@@ -50,11 +50,11 @@ a.show {
     width: 180px;
     justify-self: center;
 
-    overflow: hidden;
-
     /* Remote link properties */
     color: inherit;
     text-decoration: none;
+
+    transition: 0.5s all ease-in-out;
 }
 
 a.show > p {
@@ -65,4 +65,8 @@ img.show-image {
     width: 180px;
     height: 260px;
     object-fit: cover;
+}
+
+a.show:hover {
+    transform: scale(1.04);
 }
