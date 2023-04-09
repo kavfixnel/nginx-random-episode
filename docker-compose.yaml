@@ -7,7 +7,8 @@ services:
     ports:
       - "${PORT}:80"
     volumes:
-      - ./configs:/etc/nginx:ro
+      - ./configs/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./configs/handler.lua:/etc/nginx/handler.lua:ro
       - ./episodes:/var/episodes:ro
       - ./static:/usr/share/nginx/html/:ro
     healthcheck:
@@ -15,3 +16,16 @@ services:
       interval: 30s
       timeout: 3s
       retries: 3
+    networks:
+      - internal
+  php:
+    image: php:fpm-alpine
+    networks:
+      - internal
+    volumes:
+      - ./episodes:/var/episodes:ro
+      - ./static:/usr/share/nginx/html/:ro
+
+networks:
+  internal:
+    driver: bridge
