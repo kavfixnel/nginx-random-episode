@@ -8,21 +8,27 @@
   </head>
   <body>
     <?php
-        $services = array_diff(scandir('/var/episodes/'), array('..', '.'));
-        foreach($services as $service) {
-            echo "<div class=\"service\">";
-                echo "<h2>Random on $service</h2>";
-                echo "<div class=\"show-list\">";
-                $files = array_diff(scandir("/var/episodes/$service/"), array('..', '.'));
-                foreach($files as $file) {  
-                    echo "<a class=\"show\" href=\"/random/netflix/$file\">";
-                    echo "<img src=\"images/$file.jpeg\" alt=\"$file Show Poster\" class=\"show-image\">";
-                    echo "<p class=\"show-title\">$file</p>";
-                    echo "</a>";
-                }
-                echo "</div>";
-            echo "</div>";
-        }
+      $services = array_diff(scandir('/var/episodes/'), array('..', '.'));
+      foreach($services as $service) {
+        echo "<div class=\"service\">";
+          echo "<h2>Random on $service</h2>";
+          echo "<div class=\"show-list\">";
+          $shows = array_diff(scandir("/var/episodes/$service/"), array('..', '.'));
+          foreach($shows as $show) {  
+            $jsonString=file_get_contents("/var/episodes/$service/$show/metadata.json");
+            $jsonData=json_decode($jsonString,true);
+
+            $slug = $jsonData["slug"];
+            $imgref = $jsonData["imgref"];
+            
+            echo "<a class=\"show\" href=\"/random/$service/$show\">";
+            echo "<img src=\"$imgref\" alt=\"$slug Show Poster\" class=\"show-image\">";
+            echo "<p class=\"show-title\">$slug</p>";
+            echo "</a>";
+          }
+          echo "</div>";
+        echo "</div>";
+      }
     ?>
   </body>
 </html>
