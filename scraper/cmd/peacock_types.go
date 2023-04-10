@@ -381,8 +381,3 @@ type peacockResp struct {
 		} `json:"items"`
 	} `json:"relationships"`
 }
-
-type showMetadata struct {
-	Slug   string `json:"slug"`
-	Imgref string `json:"imgref"`
-}

@@ -125,8 +125,11 @@ var peacockCmd = &cobra.Command{
 			defer metadataFile.Close()
 
 			metadataContent := showMetadata{
-				Slug:   showSlug,
-				Imgref: fmt.Sprintf("/images/%s.jpeg", showShort),
+				Slug:        showSlug,
+				Imgref:      fmt.Sprintf("/images/%s.jpeg", showShort),
+				ShowPath:    showPath,
+				OverviewUrl: "https://www.peacocktv.com/watch/asset" + showPath,
+				NumSeasons:  len(outputFiles),
 			}
 			metadata, err := json.MarshalIndent(metadataContent, "", "    ")
 			if err != nil {
