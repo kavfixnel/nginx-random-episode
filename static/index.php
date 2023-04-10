@@ -19,10 +19,10 @@
             $jsonData=json_decode($jsonString,true);
 
             $slug = $jsonData["slug"];
-            $imgref = $jsonData["imgref"];
+            $imgRef = $jsonData["imgRef"];
             
             echo "<a class=\"show\" href=\"/random/$service/$show\">";
-            echo "<img src=\"$imgref\" alt=\"$slug Show Poster\" class=\"show-image\">";
+            echo "<img src=\"$imgRef\" alt=\"$slug Show Poster\" class=\"show-image\">";
             echo "<p class=\"show-title\">$slug</p>";
             echo "</a>";
           }
