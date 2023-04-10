@@ -9,15 +9,14 @@ the `SHOW_PATH` variable should be set to `/tv/parks-and-recreation/588379940453
 2. Query Peacock's API to find the episode links.
 4. Place the resulting list in a file in `episodes/peacock/<show-name>`
 
+## Get all episodes
+
+In the `scraper/` subdirectory run the following command
+
 ```bash
-SHOW_PATH="/tv/parks-and-recreation/5883799404534408112" # Parks and Rec's path
-
-# Get all episodes from Parks and Rec's
-curl "https://atom.peacocktv.com/adapter-calypso/v3/query/node?slug=$SHOW_PATH&represent=(items(items))&features=upcoming" \
-    --header 'x-skyott-proposition: NBCUOTT' \
-    --header 'x-skyott-territory: US' | \
-    jq -r '.relationships.items.data[].relationships.items.data[].attributes | "https://www.peacocktv.com/watch/playback/vod/" + .formats.HD.contentId + "/" + .providerVariantId' | \
-    sort -u
+go run main.go peacock \
+    --showPath /tv/that-70s-show/8674399279598141112 \
+    --showShort the70sshow \
+    --showImg https://m.media-amazon.com/images/M/MV5BN2RkZGE0MjAtZGVkOS00MzVhLTg0OWItZTc4OGRjOTQ1ZTM4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_.jpg \
+    --showSlug "The '70s Show"
 ```
-
-Simply place or pipe the shows into a new file `episodes/peacock` folder.
