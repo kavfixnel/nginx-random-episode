@@ -21,4 +21,4 @@ for line in io.lines(file) do
 end
 
 -- Redirect to episode link
-ngx.say(e[math.random(1, table.getn(e))])
+ngx.redirect(e[math.random(1, table.getn(e))])
