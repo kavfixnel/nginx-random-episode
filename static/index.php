@@ -28,7 +28,7 @@
                 echo "<p class=\"show-title\">$slug</p>";
               echo '</a>';
               echo "<input type=\"checkbox\" id=\"switch-$show\" class=\"toggle\">";
-              echo "<label class=\"lbl-toggle\" for=\"switch-$show\">By Seasons</label>";
+              echo "<label class=\"lbl-toggle\" for=\"switch-$show\">By Season</label>";
               echo '<ul class="season-list collapsible-content">';
               for ($season = 1; $season <= $numSeasons; $season++) {
                 echo '<li class="season">';
