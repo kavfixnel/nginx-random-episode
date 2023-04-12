@@ -1,4 +1,7 @@
 {
     "slug": "Gray's Anatomy",
-    "imgRef": "/images/graysanatomy.jpeg"
+    "imgRef": "/images/graysanatomy.jpeg",
+    "showPath": "",
+    "overviewUrl": "",
+    "numSeasons": 18
 }

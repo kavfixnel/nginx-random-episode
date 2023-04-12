@@ -1,4 +1,7 @@
 {
     "slug": "Breaking Bad",
-    "imgRef": "/images/breakingbad.jpeg"
+    "imgRef": "/images/breakingbad.jpeg",
+    "showPath": "",
+    "overviewUrl": "",
+    "numSeasons": 5
 }

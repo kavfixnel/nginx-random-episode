@@ -1,4 +1,7 @@
 {
     "slug": "Seinfeld",
-    "imgRef": "/images/seinfeld.jpeg"
+    "imgRef": "/images/seinfeld.jpeg",
+    "showPath": "",
+    "overviewUrl": "",
+    "numSeasons": 9
 }
