@@ -1,4 +1,7 @@
 {
     "slug": "Stranger Things",
-    "imgref": "/images/strangerthings.jpeg"
+    "imgRef": "/images/strangerthings.jpeg",
+    "showPath": "",
+    "overviewUrl": "",
+    "numSeasons": 4
 }

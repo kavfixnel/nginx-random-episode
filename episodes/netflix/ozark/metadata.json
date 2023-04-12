@@ -1,4 +1,7 @@
 {
     "slug": "Ozark",
-    "imgref": "/images/ozark.jpeg"
+    "imgRef": "/images/ozark.jpeg",
+    "showPath": "",
+    "overviewUrl": "",
+    "numSeasons": 4
 }

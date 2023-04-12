@@ -1,4 +1,7 @@
 {
     "slug": "Better Call Saul",
-    "imgref": "/images/bettercallsaul.jpeg"
+    "imgRef": "/images/bettercallsaul.jpeg",
+    "showPath": "",
+    "overviewUrl": "",
+    "numSeasons": 5
 }

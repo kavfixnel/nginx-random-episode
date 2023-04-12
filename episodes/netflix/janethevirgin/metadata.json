@@ -1,4 +1,7 @@
 {
     "slug": "Jane the Virgin",
-    "imgref": "/images/janethevirgin.jpeg"
+    "imgRef": "/images/janethevirgin.jpeg",
+    "showPath": "",
+    "overviewUrl": "",
+    "numSeasons": 5
 }

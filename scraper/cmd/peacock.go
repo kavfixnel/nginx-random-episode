@@ -12,28 +12,13 @@ import (
 )
 
 var (
-	showPath  string
-	showSlug  string
-	showShort string
-	showImg   string
-
-	skipMetadata bool
+	showPath string
 )
 
 // peacockCmd represents the base command when called without any subcommands
 var peacockCmd = &cobra.Command{
 	Use:   "peacock",
 	Short: "Scrape Peacock for a show",
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-
-		if !skipMetadata {
-			if showSlug == "" || showImg == "" {
-				return fmt.Errorf("--skip-metadata so --show-slug and --show-img must be set as well")
-			}
-		}
-
-		return nil
-	},
 	RunE: func(cmd *cobra.Command, args []string) error {
 		root, err := find.Repo()
 		if err != nil {
@@ -100,39 +85,16 @@ var peacockCmd = &cobra.Command{
 		}
 
 		if !skipMetadata {
-			response, err := http.Get(showImg)
+			err := generateMetadata(
+				root.Path,
+				"peacock",
+				fmt.Sprintf("/images/%s.jpeg", showShort),
+				"https://www.peacocktv.com/watch/asset"+showPath,
+				len(outputFiles),
+			)
 			if err != nil {
 				return err
 			}
-			defer response.Body.Close()
-
-			file, err := os.Create(fmt.Sprintf("%s/static/images/%s.jpeg", root.Path, showShort))
-			if err != nil {
-				return err
-			}
-			defer file.Close()
-
-			_, err = io.Copy(file, response.Body)
-			if err != nil {
-				return err
-			}
-
-			// Write metadata.json file
-			metadataFile, err := os.Create(fmt.Sprintf("%s/episodes/peacock/%s/metadata.json", root.Path, showShort))
-			if err != nil {
-				return err
-			}
-			defer metadataFile.Close()
-
-			metadataContent := showMetadata{
-				Slug:   showSlug,
-				Imgref: fmt.Sprintf("/images/%s.jpeg", showShort),
-			}
-			metadata, err := json.MarshalIndent(metadataContent, "", "    ")
-			if err != nil {
-				return err
-			}
-			metadataFile.Write(metadata)
 		}
 
 		return nil
@@ -141,14 +103,5 @@ var peacockCmd = &cobra.Command{
 
 func init() {
 	peacockCmd.Flags().StringVar(&showPath, "show-path", "", "Show path in Peacock. Like '/tv/parks-and-recreation/5883799404534408112'")
-	peacockCmd.Flags().StringVar(&showShort, "show-short", "", "Show short name. Like 'theofficeus'")
 	peacockCmd.MarkFlagRequired("show-path")
-	peacockCmd.MarkFlagRequired("show-short")
-
-	peacockCmd.Flags().BoolVar(&skipMetadata, "skip-metadata", false, "Skip generating and writing the metadata.json file. This will ")
-	peacockCmd.Flags().StringVar(&showSlug, "show-slug", "", "Show slug. Like 'The Office US'")
-	peacockCmd.Flags().StringVar(&showImg, "show-img", "", "A link to the shows poster. Like 'https://www.amazon.com/bribase-shop-Michael-Office-poster/dp/B07G76KVGS'")
-
-	// peacockCmd.MarkFlagRequired("show-slug")
-	// peacockCmd.MarkFlagRequired("show-img")
 }
