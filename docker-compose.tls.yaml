@@ -24,6 +24,24 @@ services:
     volumes:
       - ./episodes:/var/episodes:ro
       - ./static:/usr/share/nginx/html/:ro
+  caddy:
+    image: caddy:${CADDY_TAG}
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    networks:
+      - internal
+    volumes:
+      - ./configs/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+    external: true
+  caddy_config:
 
 networks:
   internal:
