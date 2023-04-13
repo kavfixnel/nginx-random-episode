@@ -1,0 +1,3 @@
+ec2-35-93-154-158.us-west-2.compute.amazonaws.com {
+	reverse_proxy nginx-lua:80
+}

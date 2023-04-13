@@ -10,6 +10,11 @@
         clone: yes
         update: yes
 
+    # Make sure the caddy_data docker volume exists
+    - name: Create caddy_data docker volume
+      ansible.builtin.shell:
+        cmd: docker volume create caddy_data
+
     # Shut down server in case it's already running
     - name: Stop nginx-random-redirect
       ansible.builtin.shell:
@@ -19,5 +24,5 @@
 
     - name: Start nginx-random-redirect
       ansible.builtin.shell:
-        cmd: docker compose up -d
+        cmd: docker compose -f docker-compose.tls.yaml up -d
         chdir: /home/ubuntu/nginx-random-episode
