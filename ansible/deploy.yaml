@@ -15,6 +15,12 @@
       ansible.builtin.shell:
         cmd: docker volume create caddy_data
 
+    - name: Decrypt the configs/prometheus-remote-write.yaml file and attach configuration to configs/prometheus.yaml
+      ansible.builtin.shell:
+        cmd: 'sops -d --age $(cat $SOPS_AGE_KEY_FILE | grep -oP "public key: \(.*\)") configs/prometheus-remote-write.yaml >> configs/prometheus.yaml'
+      environment:
+        SOPS_AGE_KEY_FILE: ~/.sops/ci-key.txt
+
     # Shut down server in case it's already running
     - name: Stop nginx-random-redirect
       ansible.builtin.shell:
@@ -24,5 +30,5 @@
 
     - name: Start nginx-random-redirect
       ansible.builtin.shell:
-        cmd: docker compose -f docker-compose.tls.yaml up -d
+        cmd: docker compose -f docker-compose.prod.yaml up -d
         chdir: /home/ubuntu/nginx-random-episode

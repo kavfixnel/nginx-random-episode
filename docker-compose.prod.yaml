@@ -16,6 +16,7 @@ services:
       retries: 3
     networks:
       - internal
+
   php:
     restart: unless-stopped
     image: php:${PHP_TAG}
@@ -38,10 +39,40 @@ services:
       - caddy_data:/data
       - caddy_config:/config
 
+  prometheus:
+    image: prom/prometheus:v2.43.0
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    networks:
+      - internal
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter:v1.5.0
+    privileged: true
+    command: 
+      - '--path.rootfs='
+      - '--path.procfs=/proc' 
+      - '--path.sysfs=/sys'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    networks:
+      - internal
+    restart: unless-stopped
+    deploy:
+      mode: global
+
 volumes:
   caddy_data:
     external: true
   caddy_config:
+  prometheus_data:
 
 networks:
   internal:
