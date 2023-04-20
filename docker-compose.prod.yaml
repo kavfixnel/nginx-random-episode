@@ -42,7 +42,7 @@ services:
   prometheus:
     image: prom/prometheus:v2.43.0
     volumes:
-      - ./configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -51,24 +51,20 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
     networks:
       - internal
-    restart: unless-stoppeds
+    restart: unless-stopped
 
   node-exporter:
     image: prom/node-exporter:v1.5.0
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-      - /:/host:ro,rslave
+    privileged: true
     command: 
-      - '--path.rootfs=/host'
-      - '--path.procfs=/host/proc' 
-      - '--path.sysfs=/host/sys'
+      - '--path.rootfs='
+      - '--path.procfs=/proc' 
+      - '--path.sysfs=/sys'
       - --collector.filesystem.ignored-mount-points
       - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
     networks:
       - internal
-    restart: unless-stoppeds
+    restart: unless-stopped
     deploy:
       mode: global
 
