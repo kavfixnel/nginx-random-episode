@@ -21,6 +21,40 @@
           - python3-setuptools
         state: latest
         update_cache: true
+    
+    - name: Download age
+      ansible.builtin.uri:
+        url: https://github.com/FiloSottile/age/releases/latest/download/age-v1.1.1-linux-amd64.tar.gz
+        dest: /tmp/age-v1.1.1-linux-amd64.tar.gz
+        status_code:
+         - 200
+         - 304
+
+    - name: Unarchive age
+      ansible.builtin.unarchive:
+        src: /tmp/age-v1.1.1-linux-amd64.tar.gz
+        dest: /tmp
+        remote_src: yes
+
+    - name: Install age
+      ansible.builtin.copy:
+        src: /tmp/age/age
+        dest: /usr/local/bin
+        remote_src: yes
+        mode: 0755
+
+    - name: Download Sops
+      ansible.builtin.uri:
+        url: https://github.com/mozilla/sops/releases/download/v3.7.3/sops_3.7.3_amd64.deb
+        dest: /tmp/sops_3.7.3_amd64.deb
+        status_code:
+         - 200
+         - 304
+
+    - name: Install Sops
+      apt:
+        deb: /tmp/sops_3.7.3_amd64.deb
+      become: yes
 
     - name: Add Docker GPG apt Key
       apt_key:
