@@ -8,7 +8,7 @@
         repo: https://github.com/kavfixnel/nginx-random-episode.git
         dest: /home/ubuntu/nginx-random-episode
         clone: yes
-        update: yes
+        force: yes
 
     # Make sure the caddy_data docker volume exists
     - name: Create caddy_data docker volume
@@ -18,8 +18,9 @@
     - name: Decrypt the configs/prometheus-remote-write.yaml file and attach configuration to configs/prometheus.yaml
       ansible.builtin.shell:
         cmd: 'sops -d --age $(cat $SOPS_AGE_KEY_FILE | grep -oP "public key: \(.*\)") configs/prometheus-remote-write.yaml >> configs/prometheus.yaml'
+        chdir: /home/ubuntu/nginx-random-episode
       environment:
-        SOPS_AGE_KEY_FILE: ~/.sops/ci-key.txt
+        SOPS_AGE_KEY_FILE: /home/ubuntu/.sops/ci-key.txt
 
     # Shut down server in case it's already running
     - name: Stop nginx-random-redirect
